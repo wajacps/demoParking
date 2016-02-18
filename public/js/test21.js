@@ -95,7 +95,8 @@ function getParkingBays() {
 				
 				// TODO: Harris need to update the status of each bay here
 				$.each( json, function( key, val ) {
-					$("#" + val._id).attr("class", val.state);
+					if(val.reserved == "yes") $("#" + val._id).attr("class", "Reserved");
+					else $("#" + val._id).attr("class", val.state);
 				
 					// Update title (for tooltip)
 					configToolTip (val);
@@ -111,7 +112,8 @@ function updateParkingLot(data) {
 	var val = data.Data.shift();
 	
 	// Update the tooltip
-	$("#" + val._id).attr("class", "Updated" + val.state);
+	if(val.reserved == "yes") $("#" + val._id).attr("class", "UpdatedReserved");
+	else $("#" + val._id).attr("class", "Updated" + val.state);
 	$("#" + val._id).data('tooltipsy').destroy();
 	configToolTip (val);
 }
@@ -135,15 +137,14 @@ function configToolTip (data)
 	// Create a new element
 	var myDialog = document.createElement("myDialog");
 	myDialog.setAttribute("id", "dialog" + data._id);
-	
-	
-	if(data.state == "Occupied")
-	{
-	myDialog.innerHTML = '<table border="1" cellspacing="0"><tr><td class="col1">Lot</td><td>' + data._id + '</td></tr><tr><td class="col1">Status</td><td>' + data.state + '</td></tr><tr><td class="col1">Car Reg #</td><td>ABC1234</td></tr><tr><td class="col1">Since</td><td>' + jQuery.timeago(data.last_update) + '</td></tr></table>';
-	}
-	else if(data.state == "Reserved")
+
+	if(data.reserved == "yes")
 	{
 		myDialog.innerHTML = '<table border="1" cellspacing="0"><tr><td class="col1">Lot</td><td>' + data._id + '</td></tr><tr><td class="col1">Status</td><td>' + data.state + '</td></tr><tr><td class="col1">Car Reg #</td><td>n/a</td></tr><tr><td class="col1">Since</td><td>' + jQuery.timeago(data.last_update) + '</td></tr></table>';
+	}
+	else if(data.state == "Occupied")
+	{
+	myDialog.innerHTML = '<table border="1" cellspacing="0"><tr><td class="col1">Lot</td><td>' + data._id + '</td></tr><tr><td class="col1">Status</td><td>' + data.state + '</td></tr><tr><td class="col1">Car Reg #</td><td>ABC1234</td></tr><tr><td class="col1">Since</td><td>' + jQuery.timeago(data.last_update) + '</td></tr></table>';
 	}
 	else
 	{
@@ -182,7 +183,8 @@ function onclickReserve(el)
 
 			configToolTip({
 				_id: el,
-				state: "Reserved",
+				state: "Empty",
+				reserved: "yes",
 				last_update: $.now()
 			});
 			$("#dialog" + el).dialog("open");
@@ -279,8 +281,6 @@ function configureLM3()
 		// By default, put all lot to EMPTY
 		$("#" + myId).attr("class", "Empty");
 		createLM3Dialog (myId);
-		
-		
 	}
 }
 
@@ -288,7 +288,7 @@ function configureLM3()
 $(function(){
 	// TODO: OnLoad
 	window.addEventListener("load", init, false);
-	
+
 	var date = new Date();
 	var curTimestamp = date.toLocaleString();
 //	var curTimestamp = date.getTime();

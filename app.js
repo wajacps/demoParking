@@ -20,30 +20,47 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // Added by Harris
-app.get('/api', function(req, res, next) {
+app.get('/api', function(req, res) {
 
   var el = req.query.bay;
 
-  var options = {
-    host: '10.44.14.61',
-    port: 1880,
-    path: '/reserve?bay=' + el,
-    method: 'GET'
+  var bodyString = JSON.stringify({
+    "Data" : [{
+      "_id": el,
+      "reserved" : "yes"
+    }]
+  });
+
+  var headers = {
+    'Content-Type': 'application/json',
+    'Content-Length': bodyString.length
   };
 
-  http.request(options, function(resHttp) {
+  var options = {
+    host: '10.44.39.185',
+    port: 1880,
+    path: '/api/ISSEF/parking/bays',
+    method: 'PUT',
+    headers: headers
+  };
+
+  var reqHttp = http.request(options, function(resHttp) {
     resHttp.setEncoding('utf8');
     resHttp.on('data', function (chunk) {
       console.log('BODY: ' + chunk);
     });
-  }).end();
+  });
+
+  reqHttp.write (bodyString);
+  reqHttp.end();
 
 //  res.send('respond with a resource');
   res.json({status: "Yahoo!"});
 });
 
-app.get('/', function(req, res, next) {
+app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/test21.html'));
 });
 
