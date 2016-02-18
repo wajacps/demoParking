@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var http = require("http");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -27,7 +28,19 @@ app.use('/users', users);
 
 // Added by Harris
 app.get('/api', function(req, res, next) {
-  res.render('index', { title: 'Express API' });
+  var options = {
+    host: '10.44.14.61',
+    port: 1880,
+    path: '/reserve?bay=LM2S33',
+    method: 'GET'
+  };
+
+  http.request(options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+      console.log('BODY: ' + chunk);
+    });
+  }).end();
 });
 
 
