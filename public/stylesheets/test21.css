@@ -1,0 +1,100 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+}
+
+.st0{fill:none;}
+.st1{fill:#231F20;}
+.st2{display:none;}
+.st3{display:inline;}
+.st4{fill:#F2F2F2;}
+.st5{fill:none;stroke:#000000;stroke-miterlimit:10;}
+.st6{fill:#CCCCCC;}
+.st7{fill:none;stroke:#CCCCCC;}
+.st8{fill:none;stroke:#CCCCCC;stroke-linecap:round;stroke-linejoin:round;}
+.st9{fill:none;stroke:#CCCCCC;stroke-miterlimit:10;}
+.st10{fill:#848587;}
+.st11{fill:none;stroke:#000000;stroke-width:5;stroke-miterlimit:10;}
+.st12{fill:#A6A6A6;}
+.st13{fill:#666666;}
+.st14{fill:none;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+
+.Occupied{fill:Red;stroke:#000000;stroke-miterlimit:10;}
+.UpdatedOccupied{fill:Red;stroke:#000000;stroke-miterlimit:10; animation: blinkOccupied 1s step-end 5;}
+.Occupied:hover,.UpdatedOccupied:hover{fill:DarkRed;stroke:#000000;stroke-miterlimit:10;}
+
+@keyframes turnRed {
+	from {fill: Green;}
+	to {fill: Red;} 
+}
+
+@keyframes blinkOccupied {
+	0% { fill: OrangeRed;}
+	50% {fill: Red;}
+}
+
+.Empty{fill:Green;stroke:#000000;stroke-miterlimit:10;}
+.UpdatedEmpty{fill:Green;stroke:#000000;stroke-miterlimit:10; animation: blinkEmpty 1s step-end 5;}
+.Empty:hover,.UpdatedEmpty:hover{fill:LightGreen;stroke:#000000;stroke-miterlimit:10;}
+
+@keyframes turnGreen {
+	from {fill: Red;}
+	to {fill: Green;} 
+}
+
+@keyframes blinkEmpty {
+	0% {fill: GreenYellow;}
+	50% {fill: Green; }
+}
+
+
+.Reserved{fill:Gray;stroke:#000000;stroke-miterlimit:10;}
+.UpdatedReserved{fill:Gray;stroke:#000000;stroke-miterlimit:10; animation: blinkReserved 1s step-end 5;}
+.Reserved:hover,.UpdatedReserved:hover{fill:LightGray;stroke:#000000;stroke-miterlimit:10;}
+
+@keyframes turnGray {
+	from {fill: Green;}
+	to {fill: Gray;}
+}
+
+@keyframes blinkReserved {
+	0% {fill: LightGray;}
+	50% {fill: Gray; }
+}
+
+
+/* Marker Styling */
+.normal{fill:Green;stroke:#000000;stroke-miterlimit:10; opacity:0}
+.green{fill:Green;stroke:#000000;stroke-miterlimit:10;}
+.mcm{fill:Blue;stroke:#000000;stroke-miterlimit:10;}
+
+/* Legend Table */
+.legendTitle {font-size:20px;}
+.legendContent {font-size:12px;}
+.legendTd {fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;}
+.legendTh {fill:#FFFF00;stroke:#000000;stroke-miterlimit:10;}
+
+
+.tooltipsy {
+/*	padding: 10px;
+	max-width: 200px;*/
+	color: #303030;
+	background-color: #f5f5b5;
+	border: 1px solid #deca7e;
+}
+
+.tooltipsy table {
+	font-size:12px;
+}
+
+.col1 {
+	font-weight:bold;
+}
+
+.col2 {
+	width: 100px;
+	background-color: white;
+}
+

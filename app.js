@@ -6,9 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require("http");
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var app = express();
 
 // view engine setup
@@ -23,15 +20,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
-
 // Added by Harris
 app.get('/api', function(req, res, next) {
+
+  var el = req.query.bay;
+
   var options = {
     host: '10.44.14.61',
     port: 1880,
-    path: '/reserve?bay=LM2S33',
+    path: '/reserve?bay=' + el,
     method: 'GET'
   };
 
@@ -42,9 +39,13 @@ app.get('/api', function(req, res, next) {
     });
   }).end();
 
-  res.send('respond with a resource');
+//  res.send('respond with a resource');
+  res.json({status: "Yahoo!"});
 });
 
+app.get('/', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/public/test21.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
