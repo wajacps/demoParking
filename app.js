@@ -35,12 +35,14 @@ app.get('/api', function(req, res, next) {
     method: 'GET'
   };
 
-  http.request(options, function(res) {
-    res.setEncoding('utf8');
-    res.on('data', function (chunk) {
+  http.request(options, function(resHttp) {
+    resHttp.setEncoding('utf8');
+    resHttp.on('data', function (chunk) {
       console.log('BODY: ' + chunk);
     });
   }).end();
+
+  res.send('respond with a resource');
 });
 
 
